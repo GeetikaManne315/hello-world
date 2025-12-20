@@ -1,0 +1,70 @@
+tasks = []
+
+def show_menu():
+    print("\n 0-load 1-view 2-add 3-delete 4-markdone 5-save 6-exit")
+    
+def load_file(filename):
+    with open(filename, 'r') as f:
+        return f.read().splitlines() 
+
+def view():
+    if not tasks:
+        print("No tasks present")
+    else:
+        print(tasks)
+
+def add():
+    n1 = input("Enter the new task: ")
+    tasks.append(n1)
+    print(tasks)
+
+def delete():
+    if not tasks:
+        print('No tasks to be removed ')
+    else:
+        n1 = input("Delete a task: ")
+        if n1 in tasks:
+            tasks.remove(n1)
+            print(tasks)
+        else:
+            ("No element can be removed ")
+
+def markdone():
+    if not tasks:
+        print("No tasks to be marked done")
+    else:
+        view()
+        name = input("Enter the task name to mark done: ")
+        if name in tasks:
+            position = tasks.index(name)
+            tasks[position] += " (done)"
+            print(f"Marked as done: {tasks[position]}")
+        else:
+            print("Task not found.")
+            
+def save_tasks(tasks, filename='tasks.txt'):
+    with open(filename, 'w') as f:
+        for task in tasks:
+            f.write(task + '\n')
+    print(f'Tasks saved to {filename}')
+    
+while True:
+    show_menu()
+    choice = int(input("Enter your choice: "))
+    if choice == 0:
+        tasks = load_file('tasks.txt')
+    elif choice == 1:
+        view()
+    elif choice == 2:
+        add()
+    elif choice == 3:
+         delete()
+    elif choice == 4:
+        markdone()
+    elif choice == 5:
+        save_tasks(tasks)
+    elif choice == 6:
+        print("Goodbye!")
+        break
+    else:
+        print("Invalid choice. Please try again.")
